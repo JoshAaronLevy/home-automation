@@ -1,0 +1,18 @@
+foyer_arrival:
+  alias: Foyer Arrival
+  icon: mdi:door-open
+  sequence:
+    - service: light.turn_on
+      target:
+        entity_id: light.foyer_govee_main
+      data:
+        brightness_pct: 85
+        transition: 1
+
+foyer_off:
+  alias: Foyer Off
+  icon: mdi:lightbulb-off
+  sequence:
+    - service: light.turn_off
+      target:
+        entity_id: light.foyer_govee_main

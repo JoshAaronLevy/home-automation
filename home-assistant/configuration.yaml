@@ -1,0 +1,23 @@
+# Main Home Assistant configuration for the lighting project.
+
+default_config:
+
+homeassistant:
+  name: Home Automation
+  packages: !include_dir_named packages
+
+automation: !include_dir_merge_list automations/
+script: !include_dir_merge_named scripts/
+scene: !include_dir_merge_list scenes/
+template: !include_dir_merge_list templates/
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.automation: info
+    homeassistant.components.script: info
+
+# Keep secrets in Home Assistant's local secrets.yaml, not in Git.
+# Example:
+# lutron_username: !secret lutron_username
+# lutron_password: !secret lutron_password

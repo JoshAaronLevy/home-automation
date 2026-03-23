@@ -1,0 +1,31 @@
+- id: foyer_pico_on
+  alias: Foyer Pico - On
+  description: Turns on foyer lighting when the foyer Pico on button is pressed.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_foyer_main
+        button: "on"
+        action: press
+  condition: []
+  action:
+    - service: script.foyer_arrival
+
+- id: foyer_pico_off
+  alias: Foyer Pico - Off
+  description: Turns off foyer lighting from the Pico remote.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_foyer_main
+        button: "off"
+        action: press
+  condition: []
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.foyer_govee_main

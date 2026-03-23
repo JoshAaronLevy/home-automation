@@ -1,0 +1,13 @@
+- id: foyer_arrival
+  name: Foyer Arrival
+  entities:
+    light.foyer_govee_main:
+      state: "on"
+      brightness: 220
+
+- id: foyer_night
+  name: Foyer Night
+  entities:
+    light.foyer_govee_main:
+      state: "on"
+      brightness: 60

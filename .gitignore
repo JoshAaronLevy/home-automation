@@ -1,0 +1,41 @@
+.DS_Store
+
+# macOS
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python / AppDaemon
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Logs and local runtime output
+*.log
+logs/
+
+# Home Assistant local/state files
+home-assistant/.storage/
+home-assistant/backups/
+home-assistant/www/
+home-assistant/deps/
+home-assistant/tts/
+home-assistant/secrets.yaml
+home-assistant/known_devices.yaml
+home-assistant/.cloud/
+
+# Local test or export artifacts
+tmp/
+dist/
+build/

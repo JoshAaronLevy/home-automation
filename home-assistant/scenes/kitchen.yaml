@@ -1,0 +1,19 @@
+- id: kitchen_day
+  name: Kitchen Day
+  entities:
+    light.kitchen_govee_main:
+      state: "on"
+      brightness: 255
+    light.kitchen_govee_accent:
+      state: "on"
+      brightness: 180
+
+- id: kitchen_evening
+  name: Kitchen Evening
+  entities:
+    light.kitchen_govee_main:
+      state: "on"
+      brightness: 140
+    light.kitchen_govee_accent:
+      state: "on"
+      brightness: 90

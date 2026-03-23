@@ -1,0 +1,34 @@
+- id: kitchen_pico_main_on
+  alias: Kitchen Pico - Main On
+  description: Turns on the kitchen lighting from the primary Pico remote.
+  mode: single
+  trigger:
+    # TODO: Confirm the exact Lutron event type and payload in your HA instance.
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_main
+        button: "on"
+        action: press
+  condition: []
+  action:
+    - service: script.kitchen_bright
+
+- id: kitchen_pico_off
+  alias: Kitchen Pico - Off
+  description: Turns off the kitchen lights from the Pico remote.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_main
+        button: "off"
+        action: press
+  condition: []
+  action:
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.kitchen_govee_main
+          - light.kitchen_govee_accent
