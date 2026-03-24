@@ -6,7 +6,7 @@ Current first-floor implementation area.
 
 ## Intent
 
-Model the kitchen as 3 explicit lighting zones with simple, reliable behavior. The starting goal is not scene-heavy automation. The starting goal is to make the kitchen behave clearly and predictably with smart bulbs that remain continuously powered.
+Model the kitchen as 3 explicit lighting zones with baseline switch-equivalent behavior first. The goal is not a generic smart kitchen. The goal is to preserve familiar, boring, reliable control for the actual kitchen lighting plan while keeping smart bulbs continuously powered.
 
 ## Zones
 
@@ -14,23 +14,56 @@ Model the kitchen as 3 explicit lighting zones with simple, reliable behavior. T
   4 can lights
   Main task-lighting zone
   Local API bulbs
+  Floorplan label `#3`
   Controlled from 2 Pico locations
 - `kitchen_nook`
   3 fixture bulbs
   Separate decorative or ambient zone
   Cloud-only bulbs
+  Floorplan label `#4`
 - `kitchen_sink`
   1 can light above the sink
   Separate task-lighting zone
   Local API bulb
+  Floorplan label `#5`
 
-## Control Model
+## Baseline Control Model
 
-- The 2 kitchen Pico remotes both control `kitchen_cans`.
+- All kitchen zones should begin with explicit `on` and `off` behavior.
 - Pico presses should behave like familiar wall-switch actions.
 - Pico presses do not remove power from any smart bulbs.
-- Avoid toggle logic for `kitchen_cans` because the zone has multiple controllers.
-- Prefer explicit `on` and `off` actions for the initial rollout.
+- `kitchen_cans` must not use state-based toggle logic because it has 2 controllers.
+
+### kitchen_cans
+
+- Intended baseline inputs:
+  `pico_kitchen_cans_a`
+  `pico_kitchen_cans_b`
+- Intended baseline behavior:
+  explicit `on`
+  explicit `off`
+- Notes:
+  This is the primary kitchen task-lighting zone and the most important kitchen control path to keep reliable.
+
+### kitchen_nook
+
+- Intended baseline input:
+  `pico_kitchen_nook_main`
+- Intended baseline behavior:
+  explicit `on`
+  explicit `off`
+- Notes:
+  This remains a separate decorative or ambient zone. Even though it is cloud-only, the control model should still be simple and switch-like.
+
+### kitchen_sink
+
+- Intended baseline input:
+  `pico_kitchen_sink_main`
+- Intended baseline behavior:
+  explicit `on`
+  explicit `off`
+- Notes:
+  This remains a separate task-lighting zone and should not be folded into `kitchen_cans` for convenience.
 
 ## Initial Rollout
 
@@ -38,15 +71,13 @@ Current starter implementation should focus on:
 
 - `kitchen_cans` on
 - `kitchen_cans` off
-- clear script and scene names matching real zones
+- `kitchen_nook` on
+- `kitchen_nook` off
+- `kitchen_sink` on
+- `kitchen_sink` off
+- clear script names matching real zones
 
-This keeps the main kitchen task-lighting path dependable before adding anything more clever.
-
-## Current Questions
-
-- Whether `kitchen_sink` gets its own dedicated Pico control path or is controlled another way
-- Whether `kitchen_nook` gets a dedicated Pico, a dashboard control, voice control, or scene-based control only
-- Whether raise and lower behavior is worth implementing in the first rollout
+This preserves familiar switch-like behavior before adding scenes or adaptive logic.
 
 ## Planned Or Future Behavior
 

@@ -1,3 +1,4 @@
+# Kitchen scripts are the baseline switch-equivalent layer.
 # TODO: Replace placeholder entity IDs with the real Home Assistant entities or groups.
 
 kitchen_cans_on:
@@ -38,16 +39,16 @@ kitchen_sink_off:
       target:
         entity_id: light.kitchen_sink
 
-kitchen_nook_ambient_on:
-  alias: Kitchen Nook Ambient On
+kitchen_nook_on:
+  alias: Kitchen Nook On
   icon: mdi:lamp
   sequence:
     - service: light.turn_on
       target:
         entity_id: light.kitchen_nook
       data:
-        brightness_pct: 45
-        transition: 2
+        brightness_pct: 70
+        transition: 1
 
 kitchen_nook_off:
   alias: Kitchen Nook Off

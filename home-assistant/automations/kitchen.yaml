@@ -1,6 +1,9 @@
 # Kitchen automations reflect the actual first-floor zone model.
 # Initial rollout is intentionally simple and explicit.
-# TODO: Replace placeholder Lutron event payloads and device IDs with real values.
+# TODO: Replace the placeholder event type, button names, and device IDs below
+# with the actual Lutron event payloads exposed by your Home Assistant instance.
+# If kitchen_nook or kitchen_sink end up using a non-Pico input, replace only the
+# trigger details and keep the explicit zone-level on/off actions.
 
 - id: kitchen_cans_pico_a_on
   alias: Kitchen Cans Pico A - On
@@ -62,5 +65,62 @@
   action:
     - service: script.kitchen_cans_off
 
-# TODO: Add automations for kitchen_nook and kitchen_sink only after their actual
-# control paths are confirmed. Do not guess at toggle behavior or shared mappings.
+- id: kitchen_nook_main_on
+  alias: Kitchen Nook Main - On
+  description: Explicitly turns on kitchen_nook from its baseline control input.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_nook_main
+        button: "on"
+        action: press
+  condition: []
+  action:
+    - service: script.kitchen_nook_on
+
+- id: kitchen_nook_main_off
+  alias: Kitchen Nook Main - Off
+  description: Explicitly turns off kitchen_nook from its baseline control input.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_nook_main
+        button: "off"
+        action: press
+  condition: []
+  action:
+    - service: script.kitchen_nook_off
+
+- id: kitchen_sink_main_on
+  alias: Kitchen Sink Main - On
+  description: Explicitly turns on kitchen_sink from its baseline control input.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_sink_main
+        button: "on"
+        action: press
+  condition: []
+  action:
+    - service: script.kitchen_sink_on
+
+- id: kitchen_sink_main_off
+  alias: Kitchen Sink Main - Off
+  description: Explicitly turns off kitchen_sink from its baseline control input.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_sink_main
+        button: "off"
+        action: press
+  condition: []
+  action:
+    - service: script.kitchen_sink_off

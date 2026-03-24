@@ -1,62 +1,38 @@
 # First Floor Room Map
 
-Use this document with the floorplan image to map each first-floor zone to its control path. This file describes the actual intended relationships between rooms, zones, and Pico remotes.
+This file is the literal room, zone, and control map for the first floor. It should read like an operational reference, not a conceptual summary.
 
-## Current First-Floor Scope
+## Current First-Floor Zones
 
-- Kitchen
-- Foyer
-- Hallway
+| Zone | Room | Floorplan Label | Fixture Or Bulb Count | Control Classification | Intended Pico Or Control Input(s) | Status | Notes |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `kitchen_cans` | Kitchen | `#3` | 4 can lights | Local API | `pico_kitchen_cans_a`, `pico_kitchen_cans_b` | Current | Main kitchen task-lighting zone with 2 controllers |
+| `kitchen_nook` | Kitchen | `#4` | 3 fixture bulbs | Cloud-only | `pico_kitchen_nook_main` | Current | Separate decorative or ambient zone |
+| `kitchen_sink` | Kitchen | `#5` | 1 can light above sink | Local API | `pico_kitchen_sink_main` | Current | Separate task-lighting zone |
+| `foyer_main` | Foyer | `TBD` | TBD | Preferred local API | `pico_foyer_main` | Current | Baseline behavior should stay explicit on or off |
+| `hallway_main` | Hallway | `TBD` | TBD | Preferred local API | `baseline_input_tbd` | Current | Hallway is current scope, but motion logic is draft only |
+| `living_room_torchiere_future` | Living Room | `TBD` | 1 future lamp | TBD | `pico_living_room_future` | Planned | Future smart-lighting path only |
 
-## Kitchen
+## Kitchen Control Relationships
 
-The kitchen is not a single lighting zone. It is modeled as 3 distinct zones:
+- `kitchen_cans` is the multi-controller kitchen zone.
+- Both kitchen Pico locations are intended to provide the same baseline switch-equivalent `on` and `off` behavior for `kitchen_cans`.
+- `kitchen_nook` is a separate zone with its own baseline control path.
+- `kitchen_sink` is a separate zone with its own baseline control path.
+- None of the kitchen control inputs should cut power to the bulbs.
+- For `kitchen_cans`, do not use state-based toggle behavior because there are 2 controllers for the same zone.
 
-- `kitchen_cans`
-  Main task-lighting zone
-  4 can lights
-  Local API bulbs
-  Controlled from 2 Pico locations
-- `kitchen_nook`
-  Decorative or ambient zone
-  3 fixture bulbs
-  Cloud-only bulbs
-- `kitchen_sink`
-  Separate task-lighting zone
-  1 can light above the sink
-  Local API bulb
+## Status Boundaries
 
-Control relationship:
+- Current: kitchen, foyer, and hallway baseline control modeling
+- Planned: future living room smart-lighting path
+- Future or draft: hallway motion behavior, playroom Pico, adaptive scene logic
 
-- The 2 kitchen Pico locations are both for `kitchen_cans`.
-- Those Pico presses should behave like familiar wall-switch actions, but they do not cut power to the bulbs.
-- `kitchen_nook` remains a separate zone and should not be collapsed into a generic accent bucket.
-- `kitchen_sink` remains a separate single-light zone and should not be bundled into `kitchen_cans` just for convenience.
+## Explicit Exclusions
 
-## Foyer
-
-- `foyer_main` is a current implementation area.
-- Behavior should stay simple and explicit.
-- Foyer is a good candidate for reliable on or off behavior rather than clever scene cycling.
-
-## Hallway
-
-- `hallway_main` is in current implementation scope.
-- Any hallway motion logic should be treated as draft until it proves necessary and reliable.
-- The repo should document hallway as current scope without pretending motion automation is already deployed.
-
-## Living Room
-
-- The living room overhead fan light is not part of the smart lighting system.
-- A future Govee torchiere is likely, but it is planned and not active.
-- A future Pico is likely for that future smart-lighting path.
-- Living room smart-lighting items should be documented as planned or future, not current.
-
-## Playroom
-
-- A playroom Pico is future-state only.
+- The living room overhead fan light is not in the smart-lighting system.
 
 ## Asset Reference
 
 - Floorplan image: `docs/floorplans/first-floor-lighting.png`
-- Recommended next annotation pass: label both kitchen Pico locations and outline the 3 kitchen lighting zones
+- Next annotation pass should mark `#3`, `#4`, `#5`, and the physical locations of the kitchen control inputs

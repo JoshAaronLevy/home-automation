@@ -1,7 +1,9 @@
+# Optional reference scenes for later layering.
+# The baseline rollout does not depend on scenes.
 # TODO: Replace placeholder entity IDs with the real Home Assistant entities or groups.
 
-- id: kitchen_task_lighting
-  name: Kitchen Task Lighting
+- id: kitchen_reference_task
+  name: Kitchen Reference Task
   entities:
     light.kitchen_cans:
       state: "on"
@@ -12,8 +14,8 @@
     light.kitchen_nook:
       state: "off"
 
-- id: kitchen_ambient_nook
-  name: Kitchen Ambient Nook
+- id: kitchen_reference_nook
+  name: Kitchen Reference Nook
   entities:
     light.kitchen_cans:
       state: "off"
@@ -22,16 +24,3 @@
     light.kitchen_nook:
       state: "on"
       brightness: 115
-
-- id: kitchen_cleanup
-  name: Kitchen Cleanup
-  entities:
-    light.kitchen_cans:
-      state: "on"
-      brightness: 255
-    light.kitchen_sink:
-      state: "on"
-      brightness: 255
-    light.kitchen_nook:
-      state: "on"
-      brightness: 180

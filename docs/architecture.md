@@ -53,10 +53,33 @@ Explicitly out of smart-lighting scope for now:
 
 ## Reliability Rules
 
-- Prefer explicit `on` and `off` actions over toggle logic, especially in zones with multiple controllers.
+- Prefer explicit `on` and `off` actions over toggle logic.
+- For multi-controller zones, do not use state-based toggle behavior.
 - Prefer local API bulbs for critical paths such as cans, hallway, foyer, and sink task lighting.
 - Keep the first rollout simple and predictable before layering on motion logic, scene cycling, or context-aware behavior.
 - Mark future-state ideas clearly instead of mixing them into active automations.
+
+## Behavior Layers
+
+### Baseline Switch-Equivalent Behavior
+
+- This is the day-one control layer.
+- Each zone should have clear explicit `on` and `off` behavior.
+- Pico presses should feel like familiar switch actions.
+- Smart bulbs remain powered at all times.
+- The baseline layer matters more than scenes.
+
+### Future Scene Enhancements
+
+- Scenes are optional additions after the baseline layer is stable.
+- Scenes should not replace the baseline switch-equivalent behavior.
+- Scene logic should stay simple and clearly labeled when it is not yet deployed.
+
+### Future Adaptive Logic
+
+- Motion logic, time-aware changes, and other adaptive behavior are future or draft unless explicitly promoted to current.
+- Adaptive logic must not obscure the underlying explicit control model.
+- AppDaemon is reserved for later only if YAML becomes awkward.
 
 ## Control Flow
 
