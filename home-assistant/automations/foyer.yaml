@@ -1,6 +1,9 @@
-- id: foyer_pico_on
+# Foyer behavior is intentionally simple for the initial rollout.
+# TODO: Replace placeholder Lutron event payloads and device IDs with real values.
+
+- id: foyer_main_pico_on
   alias: Foyer Pico - On
-  description: Turns on foyer lighting when the foyer Pico on button is pressed.
+  description: Explicitly turns on foyer_main from the foyer Pico.
   mode: single
   trigger:
     - platform: event
@@ -11,11 +14,11 @@
         action: press
   condition: []
   action:
-    - service: script.foyer_arrival
+    - service: script.foyer_main_on
 
-- id: foyer_pico_off
+- id: foyer_main_pico_off
   alias: Foyer Pico - Off
-  description: Turns off foyer lighting from the Pico remote.
+  description: Explicitly turns off foyer_main from the foyer Pico.
   mode: single
   trigger:
     - platform: event
@@ -26,6 +29,4 @@
         action: press
   condition: []
   action:
-    - service: light.turn_off
-      target:
-        entity_id: light.foyer_govee_main
+    - service: script.foyer_main_off

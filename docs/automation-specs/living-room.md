@@ -1,17 +1,27 @@
 # Living Room Automation Spec
 
-## Intent
+## Status
 
-Support multiple moods and brightness levels without making button behavior hard to remember.
+Planned or future-state. Not part of the active first-floor smart-lighting rollout yet.
 
-## Candidate Behaviors
+## Important Exclusion
 
-- `On` button: activate a general purpose living room scene.
-- Middle button or favorite button: activate a relaxed evening scene.
-- `Off` button: shut down all living room lighting.
+The living room overhead fan light is not part of the smart lighting system.
 
-## Future Enhancements
+## Planned Direction
 
-- Time-based default scene selection.
-- Media-aware lighting changes triggered by Home Assistant state.
-- Optional AppDaemon logic for scene cycling or long-press behavior.
+- Likely future Govee torchiere
+- Likely future Pico for that smart-lighting path
+- Simple explicit on or off behavior first
+- Scenes only after the basic control path is stable
+
+## What This Spec Is Not
+
+- This is not an active implementation record.
+- This does not imply the living room already has smart overhead lighting.
+- This should not be used to infer that the fan light is being automated.
+
+## Future Notes
+
+- If a living room Pico is added, its behavior should still avoid toggle-based ambiguity.
+- If scenes are added later, they should be labeled as future until deployed.

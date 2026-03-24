@@ -1,20 +1,58 @@
-kitchen_bright:
-  alias: Kitchen Bright
-  icon: mdi:lightbulb-on
+# TODO: Replace placeholder entity IDs with the real Home Assistant entities or groups.
+
+kitchen_cans_on:
+  alias: Kitchen Cans On
+  icon: mdi:ceiling-light
   sequence:
     - service: light.turn_on
       target:
-        entity_id:
-          - light.kitchen_govee_main
-          - light.kitchen_govee_accent
+        entity_id: light.kitchen_cans
       data:
         brightness_pct: 100
         transition: 1
 
-kitchen_evening:
-  alias: Kitchen Evening
-  icon: mdi:weather-night
+kitchen_cans_off:
+  alias: Kitchen Cans Off
+  icon: mdi:ceiling-light-outline
   sequence:
-    - service: scene.turn_on
+    - service: light.turn_off
       target:
-        entity_id: scene.kitchen_evening
+        entity_id: light.kitchen_cans
+
+kitchen_sink_on:
+  alias: Kitchen Sink On
+  icon: mdi:lightbulb
+  sequence:
+    - service: light.turn_on
+      target:
+        entity_id: light.kitchen_sink
+      data:
+        brightness_pct: 100
+        transition: 1
+
+kitchen_sink_off:
+  alias: Kitchen Sink Off
+  icon: mdi:lightbulb-outline
+  sequence:
+    - service: light.turn_off
+      target:
+        entity_id: light.kitchen_sink
+
+kitchen_nook_ambient_on:
+  alias: Kitchen Nook Ambient On
+  icon: mdi:lamp
+  sequence:
+    - service: light.turn_on
+      target:
+        entity_id: light.kitchen_nook
+      data:
+        brightness_pct: 45
+        transition: 2
+
+kitchen_nook_off:
+  alias: Kitchen Nook Off
+  icon: mdi:lamp-outline
+  sequence:
+    - service: light.turn_off
+      target:
+        entity_id: light.kitchen_nook

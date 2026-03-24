@@ -1,34 +1,66 @@
-- id: kitchen_pico_main_on
-  alias: Kitchen Pico - Main On
-  description: Turns on the kitchen lighting from the primary Pico remote.
+# Kitchen automations reflect the actual first-floor zone model.
+# Initial rollout is intentionally simple and explicit.
+# TODO: Replace placeholder Lutron event payloads and device IDs with real values.
+
+- id: kitchen_cans_pico_a_on
+  alias: Kitchen Cans Pico A - On
+  description: Explicitly turns on kitchen_cans from the first kitchen Pico location.
   mode: single
   trigger:
-    # TODO: Confirm the exact Lutron event type and payload in your HA instance.
     - platform: event
       event_type: lutron_caseta_button_event
       event_data:
-        device_id: pico_kitchen_main
+        device_id: pico_kitchen_cans_a
         button: "on"
         action: press
   condition: []
   action:
-    - service: script.kitchen_bright
+    - service: script.kitchen_cans_on
 
-- id: kitchen_pico_off
-  alias: Kitchen Pico - Off
-  description: Turns off the kitchen lights from the Pico remote.
+- id: kitchen_cans_pico_a_off
+  alias: Kitchen Cans Pico A - Off
+  description: Explicitly turns off kitchen_cans from the first kitchen Pico location.
   mode: single
   trigger:
     - platform: event
       event_type: lutron_caseta_button_event
       event_data:
-        device_id: pico_kitchen_main
+        device_id: pico_kitchen_cans_a
         button: "off"
         action: press
   condition: []
   action:
-    - service: light.turn_off
-      target:
-        entity_id:
-          - light.kitchen_govee_main
-          - light.kitchen_govee_accent
+    - service: script.kitchen_cans_off
+
+- id: kitchen_cans_pico_b_on
+  alias: Kitchen Cans Pico B - On
+  description: Explicitly turns on kitchen_cans from the second kitchen Pico location.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_cans_b
+        button: "on"
+        action: press
+  condition: []
+  action:
+    - service: script.kitchen_cans_on
+
+- id: kitchen_cans_pico_b_off
+  alias: Kitchen Cans Pico B - Off
+  description: Explicitly turns off kitchen_cans from the second kitchen Pico location.
+  mode: single
+  trigger:
+    - platform: event
+      event_type: lutron_caseta_button_event
+      event_data:
+        device_id: pico_kitchen_cans_b
+        button: "off"
+        action: press
+  condition: []
+  action:
+    - service: script.kitchen_cans_off
+
+# TODO: Add automations for kitchen_nook and kitchen_sink only after their actual
+# control paths are confirmed. Do not guess at toggle behavior or shared mappings.

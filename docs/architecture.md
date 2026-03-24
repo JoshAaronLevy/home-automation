@@ -1,41 +1,78 @@
 # Architecture
 
-## Overview
+## Actual System Model
 
-This setup uses Home Assistant Green as the automation runtime, Lutron Pico remotes as the physical control layer, and Govee lights as the lighting endpoints.
+The first-floor lighting system uses Home Assistant Green as the decision-making layer, Lutron Pico remotes as the human interface, and Govee bulbs as the lighting endpoints.
+
+The core architectural rule is that Pico remotes are preserving familiar wall-switch-style control without removing power from smart bulbs. The bulbs remain continuously powered, and button presses are translated by Home Assistant into explicit lighting actions.
 
 ```mermaid
 flowchart LR
-    Pico[Pico Remotes]
+    Pico[Pico Remote]
     Lutron[Lutron Hub]
     HA[Home Assistant Green]
     Scripts[HA Scripts and Scenes]
-    Govee[Govee Lights]
-    Docs[Docs and Specs Repo]
+    Govee[Govee Bulbs]
 
     Pico --> Lutron
     Lutron --> HA
-    Docs --> HA
     HA --> Scripts
     Scripts --> Govee
 ```
 
-## Design Principles
+## First-Floor Lighting Priorities
 
-- Keep room behavior documented before it is automated.
-- Prefer reusable scripts and scenes over duplicated actions in automations.
-- Use AppDaemon only for logic that becomes awkward to express in YAML.
-- Treat this repository as the planning and audit trail for production changes.
+Current implementation focus:
+
+- Kitchen
+- Foyer
+- Hallway
+
+Planned or future-state:
+
+- Living room Govee lighting
+- Living room Pico
+- Playroom Pico
+
+Explicitly out of smart-lighting scope for now:
+
+- Living room overhead fan light
+
+## Kitchen Zone Model
+
+- `kitchen_cans`
+  4 can lights using local API bulbs
+  This is the main kitchen task-lighting zone.
+  It is controlled from 2 Pico locations.
+- `kitchen_nook`
+  3 fixture bulbs using cloud-only control
+  This is a separate decorative or ambient zone.
+- `kitchen_sink`
+  1 can light above the sink using a local API bulb
+  This is a separate single-light task zone.
+
+## Reliability Rules
+
+- Prefer explicit `on` and `off` actions over toggle logic, especially in zones with multiple controllers.
+- Prefer local API bulbs for critical paths such as cans, hallway, foyer, and sink task lighting.
+- Keep the first rollout simple and predictable before layering on motion logic, scene cycling, or context-aware behavior.
+- Mark future-state ideas clearly instead of mixing them into active automations.
 
 ## Control Flow
 
-1. A Pico remote button press is captured through the Lutron integration.
-2. Home Assistant automation logic routes that event to a script or scene.
-3. Scripts call `light.turn_on` or `light.turn_off` against Govee entities or groups.
-4. Room specs in `docs/automation-specs/` define the expected behavior for each room.
+1. A Pico button press is received by the Lutron integration.
+2. Home Assistant interprets that event using room-specific automations.
+3. Automations call explicit scripts or scenes for the target zone.
+4. Scripts and scenes send commands to the correct Govee entities or zone groups.
 
-## Open Decisions
+## What This Repo Is For
 
-- Final entity naming convention inside Home Assistant.
-- Whether grouped Govee lights should be represented as light groups, scenes, or both.
-- Whether advanced button behaviors should live in YAML or AppDaemon.
+- Documenting the intended room and zone behavior before deployment
+- Tracking placeholder versus confirmed entity and device IDs
+- Keeping current rollout work separate from future-state ideas
+
+## Not In Use Yet
+
+- AppDaemon-based control logic
+- Complex abstraction layers
+- Advanced motion or adaptive logic as a default design choice

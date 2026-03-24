@@ -1,46 +1,65 @@
 # Home Automation
 
-This repository is the source of truth for the Home Assistant, Lutron Pico, and Govee lighting setup in our home. It centralizes configuration, room-level automation specs, device inventory, and future AppDaemon apps so changes can be documented before they are deployed.
+This repository documents and stages the first-floor smart lighting system built around Home Assistant Green, Lutron Pico remotes, and Govee bulbs. It is not a generic Home Assistant starter project. It is the planning and source-of-truth repo for the actual lighting architecture being implemented in the house.
 
-## Goals
+## Design Philosophy
 
-- Keep Home Assistant configuration organized by room and function.
-- Document how Pico remotes map to lighting behaviors.
-- Track devices, entity names, and room assumptions in one place.
-- Provide a safe staging area for automation changes before they are copied to Home Assistant Green.
+- Pico remotes preserve familiar wall-switch behavior.
+- Smart bulbs stay continuously powered. Pico presses do not cut power to bulbs.
+- Home Assistant is the central control brain.
+- Multi-controller zones should use explicit `on` and `off` behavior, not clever toggle logic.
+- Local API Govee bulbs are preferred for critical lighting paths.
+- Cloud-only Govee bulbs are acceptable for decorative or non-critical zones.
+- The initial rollout should be boring, clear, and reliable before it becomes advanced.
+
+## Current Scope
+
+Current first-floor implementation focus:
+
+- Kitchen
+- Foyer
+- Hallway
+
+Current kitchen zone model:
+
+- `kitchen_cans`: 4 can lights, critical task-lighting zone, local API bulbs, controlled from 2 Pico locations
+- `kitchen_nook`: 3 fixture bulbs, decorative/ambient zone, cloud-only bulbs
+- `kitchen_sink`: 1 can light above the sink, separate task zone, local API bulb
+
+## Planned And Future Scope
+
+- Living room smart lighting is planned, but not active yet.
+- The living room overhead fan light is not part of the smart lighting system.
+- A future Govee torchiere and future Pico are likely for the living room.
+- A playroom Pico is future-state only.
+- Hallway motion behavior is not part of the initial reliable rollout unless explicitly promoted from draft.
+
+## How To Treat Placeholders
+
+- Placeholder entity IDs are intentional and should be replaced with the real Home Assistant names later.
+- Placeholder Pico device IDs are intentional and should be replaced after the Lutron integration is confirmed.
+- Comments marked `TODO` identify places where the real Home Assistant event payloads, entity IDs, or secrets still need to be filled in.
+- Draft and future-state files should not be treated as already deployed behavior.
 
 ## Repository Layout
 
 ```text
-docs/                 Architecture notes, room maps, and automation specs
-home-assistant/       YAML configuration for automations, scripts, scenes, templates, and packages
-appdaemon/            Future AppDaemon apps for logic that is easier to manage in Python
+docs/                 Architecture notes, room maps, device inventory, and room specs
+home-assistant/       Starter YAML reflecting the real first-floor design
+appdaemon/            Reserved for future Python logic if YAML becomes awkward
 ```
 
-## Getting Started
+## Working Rules
 
-1. Review [device-inventory](./docs/device-inventory.md) and replace placeholder devices/entities with the real ones from Home Assistant.
-2. Update room specs in [automation-specs](./docs/automation-specs/) before changing automations.
-3. Replace placeholder entity IDs in `home-assistant/automations`, `home-assistant/scripts`, and `home-assistant/scenes`.
-4. Copy validated YAML into the matching location on Home Assistant Green or sync it using your preferred deployment workflow.
-5. Test one room at a time and document any behavioral changes in [CHANGELOG.md](./CHANGELOG.md).
+1. Update the room spec before changing room behavior.
+2. Keep reusable lighting actions in scripts and scenes, not duplicated across automations.
+3. Prefer explicit zone names such as `kitchen_cans` over vague names like `main` or `accent`.
+4. Clearly label anything that is planned, draft, or speculative.
+5. Do not treat this repo as production-complete just because the YAML parses.
 
-## Naming Conventions
+## Suggested Next Steps
 
-- Use room-first names for files: `kitchen.yaml`, `foyer.yaml`, `living-room.yaml`.
-- Use descriptive entity placeholders until final entities exist, for example `light.kitchen_govee_main`.
-- Keep automations thin when possible; move reusable actions into scripts and scene definitions.
-- Add room-level notes to `docs/automation-specs/` before introducing non-trivial behavior.
-
-## Deployment Notes
-
-- `home-assistant/configuration.yaml` is set up to include directories for automations, scripts, scenes, templates, and packages.
-- Empty directories use `.gitkeep` so they remain in Git until real files are added.
-- The included floorplan PNG is a placeholder asset. Replace it with the actual annotated floorplan when ready.
-
-## Next Suggested Steps
-
-- Create the real device/entity inventory from Home Assistant.
-- Decide how each Pico button should behave for single press, hold, and off actions.
-- Add room-by-room lighting scenes for day, evening, and night modes.
-- Add validation or sync scripts later if you want this repo to deploy directly to Home Assistant Green.
+1. Replace placeholder entity IDs in the kitchen, foyer, and hallway YAML.
+2. Confirm the actual Pico button event payloads exposed by the Lutron integration.
+3. Annotate the floorplan image with real Pico locations and zone boundaries.
+4. Promote draft hallway logic only after the boring baseline behavior is working reliably.

@@ -1,13 +1,15 @@
-- id: foyer_arrival
-  name: Foyer Arrival
+# TODO: Replace placeholder entity IDs with the real Home Assistant entities or groups.
+
+- id: foyer_default
+  name: Foyer Default
   entities:
-    light.foyer_govee_main:
+    light.foyer_main:
       state: "on"
       brightness: 220
 
-- id: foyer_night
-  name: Foyer Night
+- id: foyer_evening
+  name: Foyer Evening
   entities:
-    light.foyer_govee_main:
+    light.foyer_main:
       state: "on"
-      brightness: 60
+      brightness: 110

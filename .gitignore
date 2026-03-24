@@ -25,17 +25,18 @@ env/
 *.log
 logs/
 
-# Home Assistant local/state files
+# Home Assistant local and secret material
 home-assistant/.storage/
 home-assistant/backups/
-home-assistant/www/
 home-assistant/deps/
 home-assistant/tts/
-home-assistant/secrets.yaml
-home-assistant/known_devices.yaml
+home-assistant/www/
 home-assistant/.cloud/
+home-assistant/secrets.yaml
+home-assistant/secrets.local.yaml
+home-assistant/known_devices.yaml
 
-# Local test or export artifacts
+# Build or scratch output
 tmp/
 dist/
 build/

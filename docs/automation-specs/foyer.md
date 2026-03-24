@@ -1,20 +1,27 @@
 # Foyer Automation Spec
 
+## Status
+
+Current first-floor implementation area.
+
 ## Intent
 
-Make arrival and departure lighting simple and predictable.
+Keep foyer behavior boring and reliable. The foyer should respond to Pico presses with explicit lighting actions and should not depend on toggle logic or speculative scene behavior.
 
-## Inputs
+## Current Control Model
 
-- `On` button: turn foyer lights on to a welcoming brightness.
-- `Off` button: turn foyer lights off.
+- A foyer Pico triggers explicit `on` and `off` actions for `foyer_main`.
+- Smart bulbs remain continuously powered.
+- Home Assistant translates the Pico button press into the desired light action.
 
-## Outputs
+## Initial Rollout
 
-- Bright foyer lighting during arrivals.
-- Clean off state during departures or nighttime shutdown.
+- `foyer_main` on
+- `foyer_main` off
+- optional simple foyer scenes for later reference, but not required for day one
 
-## Notes
+## Scope Notes
 
-- Consider whether foyer off should also affect nearby hallway lights.
-- If the foyer is visible from the living room, align color temperature with adjacent spaces.
+- Foyer is current scope.
+- Hallway is also current scope, but hallway motion logic should remain draft until deliberately enabled.
+- If foyer and hallway are eventually coordinated, that behavior should be documented as an explicit rule, not inferred from a toggle.

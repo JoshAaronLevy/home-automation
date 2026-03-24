@@ -1,27 +1,25 @@
-- id: hallway_time_based_on
-  alias: Hallway - Time Aware On
-  description: Example hallway automation that selects brightness based on time of day.
+# Hallway is in current first-floor scope, but motion logic is still draft.
+# This automation is intentionally disabled until the real hallway design is confirmed.
+
+- id: hallway_motion_night_light_draft
+  alias: DRAFT - Hallway Motion Night Light
+  description: >
+    Draft or future-state only. Hallway is in current scope, but motion-based
+    behavior is not part of the initial reliable rollout yet.
+  initial_state: false
   mode: single
   trigger:
     - platform: state
       entity_id: binary_sensor.hallway_motion_placeholder
       to: "on"
-  condition: []
+  condition:
+    - condition: time
+      after: "22:00:00"
+      before: "06:00:00"
   action:
-    - choose:
-        - conditions:
-            - condition: time
-              after: "06:00:00"
-              before: "22:00:00"
-          sequence:
-            - service: light.turn_on
-              target:
-                entity_id: light.hallway_govee_main
-              data:
-                brightness_pct: 80
-      default:
-        - service: light.turn_on
-          target:
-            entity_id: light.hallway_govee_main
-          data:
-            brightness_pct: 20
+    - service: light.turn_on
+      target:
+        entity_id: light.hallway_main
+      data:
+        brightness_pct: 20
+        transition: 1
